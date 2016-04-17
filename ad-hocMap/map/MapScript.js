@@ -124,48 +124,234 @@ function testFucntion(){
 
 var generateIconCache = {};
 
+/*ones = Math.floor(num % 10),
+tens = Math.floor(num/10 % 10),
+hundreds = Math.floor(num/100 % 10),
+thousands = Math.floor(num % 10000 /1000),
+tenThousands = Math.floor(num / 10000 % 10),
+hundredThousands = Math.floor(num / 100000 % 10),
+millions = Math.floor(num / 1000000 % 10),
+tenMillions = Math.floor(num / 10000000 % 10),
+hundredMillions = Math.floor(num / 100000000 % 10);*/
+
 function generateIcon(number, callback) {
 	if (generateIconCache[number] !== undefined) {
 		callback(generateIconCache[number]);
 		}
 	var fontSize = 16, imageWidth = imageHeight = 40;
-	if (number >= 1000) {
-		fontSize = 10;
-		imageWidth = imageHeight = 55;
-		} 
-	else if (number < 1000 && number > 100) {
+	
+	// First circle color
+	  if(number >=0 && number < 100){
+		fontSize = 20;
+		imageWidth = imageHeight = 40;
+		var svg = d3.select(document.createElement('div')).append('svg').attr('viewBox', '0 0 54.4 54.4').append('g')
+		// circle 
+		var circles = svg.append('circle').attr('cx', '27.2').attr('cy', '27.2').attr('r', '20.2').style('fill', '#80e6ff');
+		// border 
+		//var path = svg.append('path').attr('d','M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z').attr('fill', '#ff3366');
+		// text color
+		var text = svg.append('text').attr('dx', 27).attr('dy', 32).attr('text-anchor', 'middle').attr('style','font-size:'+ fontSize + 'px; fill: #f0ffff; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: ').text(number);
+		var svgNode = svg.node().parentNode.cloneNode(true), image = new Image();
+		d3.select(svgNode).select('clippath').remove();
+		var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
+		image.onload = (function(imageWidth, imageHeight) {
+			var canvas = document.createElement('canvas'), context = canvas.getContext('2d'), dataURL;
+			d3.select(canvas).attr('width', imageWidth).attr('height', imageHeight);
+			context.drawImage(image, 0, 0, imageWidth, imageHeight);
+			dataURL = canvas.toDataURL();
+			generateIconCache[number] = dataURL;
+			callback(dataURL);
+			}).bind(this, imageWidth, imageHeight);
+		
+		image.src = 'data:image/svg+xml;base64,'+ btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g,
+		
+		function(match, p1) {
+			return String.fromCharCode('0x' + p1);
+			}));
+		} // number  number >=0 && number < 100
+	  
+	// Second circle color
+	  if(number >=100 && number < 1000){
+			fontSize = 16;
+			imageWidth = imageHeight = 45;
+			var svg = d3.select(document.createElement('div')).append('svg').attr('viewBox', '0 0 54.4 54.4').append('g')
+			// circle 
+			var circles = svg.append('circle').attr('cx', '27.2').attr('cy', '27.2').attr('r', '21.5').style('fill', '#00ccff');
+			// border 
+			//var path = svg.append('path').attr('d','M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z').attr('fill', '#ff3366');
+			// text color
+			var text = svg.append('text').attr('dx', 27).attr('dy', 32).attr('text-anchor', 'middle').attr('style','font-size:'+ fontSize + 'px; fill: #ffefef; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: ').text(number);
+			var svgNode = svg.node().parentNode.cloneNode(true), image = new Image();
+			d3.select(svgNode).select('clippath').remove();
+			var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
+			image.onload = (function(imageWidth, imageHeight) {
+				var canvas = document.createElement('canvas'), context = canvas.getContext('2d'), dataURL;
+				d3.select(canvas).attr('width', imageWidth).attr('height', imageHeight);
+				context.drawImage(image, 0, 0, imageWidth, imageHeight);
+				dataURL = canvas.toDataURL();
+				generateIconCache[number] = dataURL;
+				callback(dataURL);
+				}).bind(this, imageWidth, imageHeight);
+			
+			image.src = 'data:image/svg+xml;base64,'+ btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g,
+			
+			function(match, p1) {
+				return String.fromCharCode('0x' + p1);
+				}));
+			} //   number >= 100 && number < 1000
+	  
+	// Third circle color
+	  if(number >= 1000 && number < 10000){
+			fontSize = 16;
+			imageWidth = imageHeight = 50;
+			var svg = d3.select(document.createElement('div')).append('svg').attr('viewBox', '0 0 54.4 54.4').append('g')
+			// circle 
+			var circles = svg.append('circle').attr('cx', '27.2').attr('cy', '27.2').attr('r', '22.8').style('fill', '#0099bf');
+			// border 
+			//var path = svg.append('path').attr('d','M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z').attr('fill', '#ff3366');
+			// text color
+			var text = svg.append('text').attr('dx', 27).attr('dy', 32).attr('text-anchor', 'middle').attr('style','font-size:'+ fontSize + 'px; fill: #ffefef; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: ').text(number);
+			var svgNode = svg.node().parentNode.cloneNode(true), image = new Image();
+			d3.select(svgNode).select('clippath').remove();
+			var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
+			image.onload = (function(imageWidth, imageHeight) {
+				var canvas = document.createElement('canvas'), context = canvas.getContext('2d'), dataURL;
+				d3.select(canvas).attr('width', imageWidth).attr('height', imageHeight);
+				context.drawImage(image, 0, 0, imageWidth, imageHeight);
+				dataURL = canvas.toDataURL();
+				generateIconCache[number] = dataURL;
+				callback(dataURL);
+				}).bind(this, imageWidth, imageHeight);
+			
+			image.src = 'data:image/svg+xml;base64,'+ btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g,
+			
+			function(match, p1) {
+				return String.fromCharCode('0x' + p1);
+				}));
+			} //   number >= 1000 && number < 10000
+	  
+	// Forth circle color
+	  if( number >= 10000 && number < 100000){
+			fontSize = 14;
+			imageWidth = imageHeight = 50;
+			var svg = d3.select(document.createElement('div')).append('svg').attr('viewBox', '0 0 54.4 54.4').append('g')
+			// circle 
+			var circles = svg.append('circle').attr('cx', '27.2').attr('cy', '27.2').attr('r', '23.4').style('fill', '#00667f');
+			// border 
+			//var path = svg.append('path').attr('d','M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z').attr('fill', '#ff3366');
+			// text color
+			var text = svg.append('text').attr('dx', 27).attr('dy', 32).attr('text-anchor', 'middle').attr('style','font-size:'+ fontSize + 'px; fill: #ffefef; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: ').text(number);
+			var svgNode = svg.node().parentNode.cloneNode(true), image = new Image();
+			d3.select(svgNode).select('clippath').remove();
+			var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
+			image.onload = (function(imageWidth, imageHeight) {
+				var canvas = document.createElement('canvas'), context = canvas.getContext('2d'), dataURL;
+				d3.select(canvas).attr('width', imageWidth).attr('height', imageHeight);
+				context.drawImage(image, 0, 0, imageWidth, imageHeight);
+				dataURL = canvas.toDataURL();
+				generateIconCache[number] = dataURL;
+				callback(dataURL);
+				}).bind(this, imageWidth, imageHeight);
+			
+			image.src = 'data:image/svg+xml;base64,'+ btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g,
+			
+			function(match, p1) {
+				return String.fromCharCode('0x' + p1);
+				}));
+			} //   number >= 10000 && number < 100000
+	  
+	// Fifth circle color
+	  if( number >= 100000 && number < 1000000){
+			fontSize = 12;
+			imageWidth = imageHeight = 50;
+			var svg = d3.select(document.createElement('div')).append('svg').attr('viewBox', '0 0 54.4 54.4').append('g')
+			// circle 
+			var circles = svg.append('circle').attr('cx', '27.2').attr('cy', '27.2').attr('r', '24.7').style('fill', '#004c5f');
+			// border 
+			//var path = svg.append('path').attr('d','M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z').attr('fill', '#ff3366');
+			// text color
+			var text = svg.append('text').attr('dx', 27).attr('dy', 32).attr('text-anchor', 'middle').attr('style','font-size:'+ fontSize + 'px; fill: #ffefef; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: ').text(number);
+			var svgNode = svg.node().parentNode.cloneNode(true), image = new Image();
+			d3.select(svgNode).select('clippath').remove();
+			var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
+			image.onload = (function(imageWidth, imageHeight) {
+				var canvas = document.createElement('canvas'), context = canvas.getContext('2d'), dataURL;
+				d3.select(canvas).attr('width', imageWidth).attr('height', imageHeight);
+				context.drawImage(image, 0, 0, imageWidth, imageHeight);
+				dataURL = canvas.toDataURL();
+				generateIconCache[number] = dataURL;
+				callback(dataURL);
+				}).bind(this, imageWidth, imageHeight);
+			
+			image.src = 'data:image/svg+xml;base64,'+ btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g,
+			
+			function(match, p1) {
+				return String.fromCharCode('0x' + p1);
+				}));
+			} //   number >= 100000 && number < 1000000
+	  
+	// Sixth circle color
+	  if( number >= 1000000 && number < 10000000){
+			fontSize = 13;
+			imageWidth = imageHeight = 50;
+			var svg = d3.select(document.createElement('div')).append('svg').attr('viewBox', '0 0 54.4 54.4').append('g')
+			// circle 
+			var circles = svg.append('circle').attr('cx', '27.2').attr('cy', '27.2').attr('r', '25.9').style('fill', '#B2A3E4.');
+			// border 
+			//var path = svg.append('path').attr('d','M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z').attr('fill', '#ff3366');
+			// text color
+			var text = svg.append('text').attr('dx', 27).attr('dy', 32).attr('text-anchor', 'middle').attr('style','font-size:'+ fontSize + 'px; fill: #ffefef; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: ').text(number);
+			var svgNode = svg.node().parentNode.cloneNode(true), image = new Image();
+			d3.select(svgNode).select('clippath').remove();
+			var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
+			image.onload = (function(imageWidth, imageHeight) {
+				var canvas = document.createElement('canvas'), context = canvas.getContext('2d'), dataURL;
+				d3.select(canvas).attr('width', imageWidth).attr('height', imageHeight);
+				context.drawImage(image, 0, 0, imageWidth, imageHeight);
+				dataURL = canvas.toDataURL();
+				generateIconCache[number] = dataURL;
+				callback(dataURL);
+				}).bind(this, imageWidth, imageHeight);
+			
+			image.src = 'data:image/svg+xml;base64,'+ btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g,
+			
+			function(match, p1) {
+				return String.fromCharCode('0x' + p1);
+				}));
+			} //   number >= 100000 && number < 1000000
+	  
+	// Seventh circle color
+	  if(number > 1000000) {
 		fontSize = 14;
-		imageWidth = imageHeight = 55;
-		}
-	var svg = d3.select(document.createElement('div')).append('svg').attr('viewBox', '0 0 54.4 54.4').append('g')
-	
-	// circle 
-	var circles = svg.append('circle').attr('cx', '27.2').attr('cy', '27.2').attr('r', '21.2').style('fill', '#007EA7');
-	
-	// border 
-	//var path = svg.append('path').attr('d','M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z').attr('fill', '#ff3366');
-	
-	// text color
-	var text = svg.append('text').attr('dx', 27).attr('dy', 32).attr('text-anchor', 'middle').attr('style','font-size:'+ fontSize + 'px; fill: #FFFFFF; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bolder').text(number);
-	
-	
-	var svgNode = svg.node().parentNode.cloneNode(true), image = new Image();
-	d3.select(svgNode).select('clippath').remove();
-	var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
-	image.onload = (function(imageWidth, imageHeight) {
-		var canvas = document.createElement('canvas'), context = canvas.getContext('2d'), dataURL;
-		d3.select(canvas).attr('width', imageWidth).attr('height', imageHeight);
-		context.drawImage(image, 0, 0, imageWidth, imageHeight);
-		dataURL = canvas.toDataURL();
-		generateIconCache[number] = dataURL;
-		callback(dataURL);
-		}).bind(this, imageWidth, imageHeight);
-	
-	image.src = 'data:image/svg+xml;base64,'+ btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g,
-	
-	function(match, p1) {
-		return String.fromCharCode('0x' + p1);
-		}));
+		imageWidth = imageHeight = 50;
+		
+		var svg = d3.select(document.createElement('div')).append('svg').attr('viewBox', '0 0 54.4 54.4').append('g')
+		// circle 
+		var circles = svg.append('circle').attr('cx', '27.2').attr('cy', '27.2').attr('r', '26.2').style('fill', '#9E8CD7');
+		// border 
+		//var path = svg.append('path').attr('d','M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z').attr('fill', '#ff3366');
+		// text color
+		var text = svg.append('text').attr('dx', 27).attr('dy', 32).attr('text-anchor', 'middle').attr('style','font-size:'+ fontSize + 'px; fill: #ffefef; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: ').text(number);
+		var svgNode = svg.node().parentNode.cloneNode(true), image = new Image();
+		d3.select(svgNode).select('clippath').remove();
+		var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
+		image.onload = (function(imageWidth, imageHeight) {
+			var canvas = document.createElement('canvas'), context = canvas.getContext('2d'), dataURL;
+			d3.select(canvas).attr('width', imageWidth).attr('height', imageHeight);
+			context.drawImage(image, 0, 0, imageWidth, imageHeight);
+			dataURL = canvas.toDataURL();
+			generateIconCache[number] = dataURL;
+			callback(dataURL);
+			}).bind(this, imageWidth, imageHeight);
+		
+		image.src = 'data:image/svg+xml;base64,'+ btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g,
+		
+		function(match, p1) {
+			return String.fromCharCode('0x' + p1);
+			}));
+		} // number > 1000000
+	  
+	  
 	} // generateIcon
 
 /////////////////////////////////////
@@ -181,11 +367,11 @@ function clearCircle() {
 	
 function initMap() {
 	// Map Style
-	var styles = [
-	{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#1B2A41"}]},
+	var styles = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"visibility":"off"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":-100}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"all","stylers":[{"color":"#2a292a"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"color":"#a09d9e"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#808080"}]}];
+/*	{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#1B2A41"}]},
 	{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"color":"#000000"},{"lightness":50}]},
 	{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},
-	{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#3A86FF"},{"lightness":50},{"weight":1.4}]},
+	{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#007EA7"},{"lightness":50},{"weight":1.4}]},
 	{"featureType":"landscape","elementType":"all","stylers":[{"color":"#08304b"}]},
 	{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#0c4152"},{"lightness":5}]},
 	{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},
@@ -194,7 +380,8 @@ function initMap() {
 	{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#0b3d51"},{"lightness":16}]},
 	{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"}]},
 	{"featureType":"transit","elementType":"all","stylers":[{"color":"#146474"}]},
-	{"featureType":"water","elementType":"all","stylers":[{"color":"#021019"}]}];
+	{"featureType":"water","elementType":"all","stylers":[{"color":"#021019"}]}];*/
+	
 	var styledMap = new google.maps.StyledMapType(styles, {
 		name : "Styled Map"
 	});
